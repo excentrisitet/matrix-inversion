@@ -9,7 +9,7 @@ Dim objFolder
 Set objFolder = objFSO.GetFolder(".")
 Dim objTextWriter, objTextReader
 
-Dim Dictionary_of_lines										'As New Dictionary of lines
+Dim Dictionary_of_lines															'As New Dictionary of lines
 Set Dictionary_of_lines = CreateObject("Scripting.Dictionary")
 Set objTextWriter = objFSO.OpenTextFile("inverse.txt", 2, True)					'File for writing
 Set objTextReader = objFSO.OpenTextFile("Original.txt", 1, False)				'File for reading
@@ -43,10 +43,10 @@ For i = 0 to UBound(arr_original , 1)
 	Dim temp
 	If arr_original(i,i) = 0 Then		'If original element is zero
 		Dim temp2 : temp2 = i + 1 
-		Do
+		Do Until arr_original(temp2,i) <> 0 Or temp2 = UBound(arr_original , 1)
 			temp2 = temp2 + 1
-		Loop Until arr_original(temp2,i) <> 0 Or temp2 = UBound(arr_original , 1)
-		If temp2 = UBound(arr_original , 1) Then 
+		Loop
+		If temp2 = UBound(arr_original , 1) + 1 Then 
 			MsgBox "У матрицы нулевой определитель. Обратной матрицы не существует"
 			WScript.Quit
 		Else
@@ -98,6 +98,7 @@ For i = 0 to Ubound(Dictionary_of_lines.Items())
 	objTextWriter.Writeline()
 Next
 objTextWriter.Writeline()
+
 
 
 Set objFolder = Nothing
