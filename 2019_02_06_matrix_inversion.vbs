@@ -1,4 +1,4 @@
-'Попытки создания мастер про-файла
+'РџРѕРёСЃРє РѕР±СЂР°С‚РЅРѕР№ РјР°С‚СЂРёС†С‹
 
 Option Explicit
 
@@ -23,7 +23,7 @@ Loop Until objTextReader.AtEndOfStream
 
 Dim i,j,k
 ReDim arr_original(Ubound(Dictionary_of_lines.Items()), Ubound(Dictionary_of_lines.Items()))
-'Заполнение массива
+'Р—Р°РїРѕР»РЅРµРЅРёРµ РјР°СЃСЃРёРІР°
 For i = 0 to Ubound(Dictionary_of_lines.Items())
 	Dim Temp_array
 	Temp_array = split(Dictionary_of_lines.Items()(i))
@@ -36,8 +36,6 @@ ReDim arr_inv (UBound(arr_original , 1) , UBound(arr_original , 2))
 For i = 0 to UBound(arr_original , 1)
 	arr_inv(i, i) = 1
 Next
-
-Call Print_results
 
 For i = 0 to UBound(arr_original , 1)
 	Dim temp
