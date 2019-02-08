@@ -41,15 +41,15 @@ Next
 'Direct way
 For i = 0 to UBound(arr_original , 1)
 	Dim temp
-	If arr_original(i,i) = 0 Then		'If original element is zero
-		Dim temp2 : temp2 = i + 1 
+	If arr_original(i,i) = 0 Then				'If original element is zero
+		Dim temp2 : temp2 = i + 1 				'then find next row with nonzero element
 		Do Until arr_original(temp2,i) <> 0 Or temp2 = UBound(arr_original , 1)
 			temp2 = temp2 + 1
 		Loop
 		If temp2 = UBound(arr_original , 1) + 1 Then 
 			MsgBox "У матрицы нулевой определитель. Обратной матрицы не существует"
 			WScript.Quit
-		Else
+		Else									'Now change these two rows
 			For j = 0 to UBound(arr_original , 2)
 				temp = arr_original(i,j)
 				arr_original(i,j) = arr_original(temp2,j)
@@ -61,16 +61,20 @@ For i = 0 to UBound(arr_original , 1)
 		End If
 	End If
 	temp = arr_original(i,i)
-	For j = 0 to UBound(arr_original , 2)
-		arr_original(i,j) = arr_original(i,j) / temp
-		arr_inv(i,j) = arr_inv(i,j) / temp
-	Next
+	If not temp = 1 Then						'If arr_original(i,i) = 1 then we can skip the normalization part
+		For j = 0 to UBound(arr_original , 2)
+			arr_original(i,j) = arr_original(i,j) / temp
+			arr_inv(i,j) = arr_inv(i,j) / temp
+		Next
+	End If
 	For k = i + 1 to UBound(arr_original , 1)
 		temp = arr_original(k,i)
-		For j = 0 to UBound(arr_original , 2)
-			arr_original(k,j) = arr_original(k,j) - arr_original(i,j) * temp
-			arr_inv(k,j) = arr_inv(k,j) - arr_inv(i,j) * temp
-		Next
+		If not temp = 0 Then					'If next rows contain zeros at the (k,j)-th place they are good to go
+			For j = 0 to UBound(arr_original , 2)
+				arr_original(k,j) = arr_original(k,j) - arr_original(i,j) * temp
+				arr_inv(k,j) = arr_inv(k,j) - arr_inv(i,j) * temp
+			Next
+		End If
 	Next
 Next
 'Backward way
